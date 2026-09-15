@@ -153,6 +153,8 @@ function onCardPointerDown(ev) {
     pointerId: ev.pointerId,
     startX: ev.clientX,
     startY: ev.clientY,
+    lastY: ev.clientY,
+    scrolling: false, // becomes true once we decide this is a swipe, not a hold
     timer: setTimeout(() => engageDrag(li, ev.pointerId, ev.clientX, ev.clientY), HOLD_MS)
   };
 
@@ -163,12 +165,20 @@ function onCardPointerDown(ev) {
 
 function onPendingPointerMove(ev) {
   if (!pending || ev.pointerId !== pending.pointerId) return;
-  const dx = ev.clientX - pending.startX;
-  const dy = ev.clientY - pending.startY;
-  if (Math.sqrt(dx * dx + dy * dy) > MOVE_CANCEL_PX) {
-    clearTimeout(pending.timer);
-    cleanupPending();
+
+  if (!pending.scrolling) {
+    const dx = ev.clientX - pending.startX;
+    const dy = ev.clientY - pending.startY;
+    if (Math.sqrt(dx * dx + dy * dy) > MOVE_CANCEL_PX) {
+      clearTimeout(pending.timer);
+      pending.scrolling = true;
+    }
   }
+
+  if (pending.scrolling) {
+    window.scrollBy(0, pending.lastY - ev.clientY);
+  }
+  pending.lastY = ev.clientY;
 }
 
 function onPendingPointerEnd() {
