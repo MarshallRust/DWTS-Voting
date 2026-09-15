@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dancing With the Stars — Fan Vote</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>⭐ DWTS Fan Vote</h1>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section id="tab-vote" class="tab-panel active">
+      <p class="intro">
+        Press and hold any card, then drag it up or down to rank — favorite
+        on top. Add an optional comment, then submit. You can come back and
+        resubmit any time to update your ranking.
+      </p>
+
+      <div id="already-voted-banner" class="banner" hidden>
+        You already voted as <strong id="already-voted-name"></strong>.
+        Submitting again will replace your previous ranking.
+      </div>
+
+      <form id="vote-form" autocomplete="off">
+        <label class="name-field">
+          Your name
+          <input type="text" id="voter-name" name="voter-name" required placeholder="Jane Doe">
+        </label>
+        <h2 class="section-title">Your ranking</h2>
+        <p id="loading-msg" class="muted">Loading contestants…</p>
+        <ol id="ranking-list" class="ranking-list" hidden></ol>
+
+        <label class="comment-label">
+          Comments <span class="hint">(optional)</span>
+          <textarea id="voter-comment" maxlength="1000" rows="3" placeholder="What did you think of this week?"></textarea>
+        </label>
+
+        <button type="submit" id="submit-btn" class="primary-btn">Submit my ranking</button>
+        <p id="submit-status" class="status-msg" role="status"></p>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Fan-made voting site — not affiliated with ABC or Dancing With the Stars.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
